@@ -1,0 +1,419 @@
+{
+  "info": {
+    "_postman_id": "afc97fb5-a762-4b78-989b-6769f6cfaa57",
+    "name": "preprod_thrundrz",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55874707",
+    "_collection_link": "https://go.postman.co/collection/55874707-afc97fb5-a762-4b78-989b-6769f6cfaa57?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "inscription createur",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nomComplet\": \"admane hocine\",\n  \"email\": \"admane.hocine9@example.com\",\n  \"password\": \"MotDePasse123!\",\n  \"password_confirmation\": \"MotDePasse123!\",\n  \"telephone\": \"0600000000\",\n  \"siret\": \"12345678900012\",\n  \"raison_sociale\": \"Thrundrz SAS\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}register/createur",
+          "host": [
+            "{{url}}register"
+          ],
+          "path": [
+            "createur"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "inscription admin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Recuper les infos\", function () {",
+              "    pm.collectionVariables.set(\"email_admin\",JSON.parse(pm.request.body.raw).email)",
+              "    pm.collectionVariables.set(\"password_admin\",JSON.parse(pm.request.body.raw).password)",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@thrundrz.fr\",\n  \"password\": \"Admin1234\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://677959eb-084c-425a-a1ed-b7372a9aa71d.mock.pstmn.io/200",
+          "protocol": "https",
+          "host": [
+            "677959eb-084c-425a-a1ed-b7372a9aa71d",
+            "mock",
+            "pstmn",
+            "io"
+          ],
+          "path": [
+            "200"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "inscription_200",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@thrundrz.fr\",\n  \"password\": \"Admin1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://677959eb-084c-425a-a1ed-b7372a9aa71d.mock.pstmn.io/200",
+              "protocol": "https",
+              "host": [
+                "677959eb-084c-425a-a1ed-b7372a9aa71d",
+                "mock",
+                "pstmn",
+                "io"
+              ],
+              "path": [
+                "200"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "description": "",
+              "type": "text"
+            }
+          ],
+          "cookie": [
+            {
+              "expires": "Invalid Date",
+              "domain": "",
+              "path": ""
+            }
+          ],
+          "body": "{\n  \"message\":\"Inscription valid\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "login admin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"save token\", function () {",
+              "    pm.collectionVariables.set(\"token\", pm.response.json().token);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email_admin}}\",\n  \"password\": \"{{password_admin}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}login/admin",
+          "host": [
+            "{{url}}login"
+          ],
+          "path": [
+            "admin"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"titre\": \"Événements du week-end\",\n    \"isDisabled\": false,\n    \"position\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}admin/tickets",
+          "host": [
+            "{{url}}admin"
+          ],
+          "path": [
+            "tickets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}admin/tickets",
+          "host": [
+            "{{url}}admin"
+          ],
+          "path": [
+            "tickets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"ticket_id\": 3,\n    \"type\": \"event\",\n    \"event_id\": 5,\n    \"image\": \"https://exemple.com/image.jpg\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}admin/annonces",
+          "host": [
+            "{{url}}admin"
+          ],
+          "path": [
+            "annonces"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "filter. event by admin",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}admin/events/search?q=r",
+          "host": [
+            "{{url}}admin"
+          ],
+          "path": [
+            "events",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "r"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get annonce for client",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"page\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}tickets/1/annonces",
+          "host": [
+            "{{url}}tickets"
+          ],
+          "path": [
+            "1",
+            "annonces"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Vérification pagination\", function () {",
+              "    let size=pm.response.json().events.length",
+              "    let per_page=pm.response.json().pagination.per_page",
+              "pm.expect(per_page).to.equal(size)    ",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"page\":1,\n    \"categoryId\":-1\n    }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}evenementExplorer",
+          "host": [
+            "{{url}}evenementExplorer"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "email_admin",
+      "value": ""
+    },
+    {
+      "key": "password_admin",
+      "value": ""
+    }
+  ]
+}
